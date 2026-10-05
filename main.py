@@ -71,14 +71,14 @@ def plot_price_vs_volatility(sigmas, prices, hist_vol, S, K):
     ax.legend()
     ax.grid(True, alpha=0.3)
 
-    # Small caption so the fixed parameters are visible on the figure
+    # Caption in the upper-right so it does not cross the historical-vol line
     ax.text(
-        0.02,
+        0.98,
         0.98,
         f"{TICKER}  S={S:.2f}  K={K:.2f}  T=30/365  r={R:.0%}",
         transform=ax.transAxes,
         va="top",
-        ha="left",
+        ha="right",
         fontsize=8,
         color="dimgray",
     )

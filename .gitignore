@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 .Python
+black_scholes_call_vs_volatility.png
