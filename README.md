@@ -81,3 +81,22 @@ black_scholes_call_vs_volatility.png
 ```
 
 Internet access is required so yfinance can download prices from Yahoo Finance.
+
+
+## Additional offline research experiments
+
+Run `python experiments.py` to generate five figures in `plots/`:
+European call price against stock price, strike, time to expiry, volatility,
+and BSM Vega against volatility. These use illustrative fixed inputs and
+**do not** require downloading stock prices.
+
+Run `python -m unittest -v` for offline formula and finite-difference
+Greek consistency checks.
+
+- `greeks.py` — analytic Delta, Gamma, Vega, Theta and Rho
+- `experiments.py` — controlled parameter sweeps, saves five PNG files
+- `test_models.py` — offline regression checks
+- `RESEARCH_NOTES.md` — interpretations, assumptions and next directions
+
+For the original experiment based on AAPL historical data, still run
+`python main.py`. Historical volatility is **not** implied volatility.
