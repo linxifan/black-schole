@@ -68,10 +68,30 @@ def main():
         plt.plot(STRIKES, smile_volatility(STRIKES, a) * 100, label=f"a={a}")
     save_plot("01_volatility_smile.png", "Synthetic volatility smiles", "Volatility (%)")
 
+    # Side-by-side comparison: full price scale and magnified difference.
     df = runs[1.0]
-    plt.plot(df["strike"], df["fixed_price"], label="Constant BSM")
-    plt.plot(df["strike"], df["synthetic_market_price"], "--", label="Synthetic smile")
-    save_plot("02_price_comparison.png", "Call prices (a=1)", "Call price ($)")
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    axes[0].plot(df["strike"], df["fixed_price"], label="Constant BSM")
+    axes[0].plot(df["strike"], df["synthetic_market_price"], "--", label="Synthetic smile")
+    axes[0].set_title("Full call price comparison (a=1)")
+    axes[0].set_xlabel("Strike price (K)")
+    axes[0].set_ylabel("Call price ($)")
+    axes[0].legend()
+    axes[0].grid(alpha=0.3)
+
+    axes[1].plot(
+        df["strike"], df["synthetic_market_price"] - df["fixed_price"],
+        label="Synthetic smile - Constant BSM", color="tab:orange"
+    )
+    axes[1].axhline(0, color="gray", linewidth=0.8)
+    axes[1].set_title("Magnified price difference (a=1)")
+    axes[1].set_xlabel("Strike price (K)")
+    axes[1].set_ylabel("Price difference ($)")
+    axes[1].legend()
+    axes[1].grid(alpha=0.3)
+    fig.tight_layout()
+    fig.savefig(OUTPUT_DIR / "02_price_comparison.png", dpi=200)
+    plt.close(fig)
 
     for a in STRENGTHS:
         plt.plot(STRIKES, runs[a]["absolute_error"], label=f"a={a}")
